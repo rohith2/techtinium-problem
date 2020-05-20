@@ -1,0 +1,72 @@
+#include <iostream>
+#include <iterator>
+#include <map>
+#include<string>
+using namespace std;
+void allocation(int capacity, int hours, int city[5], string place); 
+int main()
+{
+  int c,h;
+  // Hard Coded from the question
+  int NY[5] = {120, 230, 450, 774, 1400};
+  int IN[5] = {140, 0, 413, 890, 1300};
+  int CH[5] = {110, 200, 0, 670, 1180};
+
+  // Hard Coded from the question
+  cout<<"Enter the Capacity and Hours :";
+
+  cin>>c>>h;
+
+  allocation(c,h, NY, "New York");
+  allocation(c,h, IN, "India");
+  allocation(c,h, CH, "China");
+
+  return 0;
+}
+
+  void allocation(int capacity, int hours, int city[5], string place) {
+    // empty map container
+    map<string, int> result;
+    //Hard Coded from the Question
+    result.insert(pair<string, int>("Large", 0));
+    result.insert(pair<string, int>("XLarge", 0));
+    result.insert(pair<string, int>("2XLarge", 0));
+    result.insert(pair<string, int>("4XLarge", 0));
+    result.insert(pair<string, int>("8XLarge", 0));
+
+    //Hard Coded from the Question
+      map<string, int>::iterator itr = result.begin();
+
+    // Hard Coded from the question
+    string sizes[5] = {"Large", "XLarge", "2XLarge", "4XLarge", "8XLarge"};
+    int units[5] = {10, 20, 40, 80, 160};
+
+    // Hard Coded from the question
+    int cost = 0;
+    int start = 4;
+    int unit;
+
+    while(capacity > 0) {
+    unit = units[start];
+    if(unit <= capacity && city[start]!= 0) {
+        cost += city[start];
+        result.find(sizes[start])->second += 1;
+        capacity = capacity - units[start];
+    }
+    else {
+        start--;
+    }
+
+  }
+  cout<<"\n Region : "<<place;
+  cout<<"\n Total Cost : "<<cost;
+  cout<<"\n Machines :";
+  while (itr != result.end()) {
+        if(itr->second != 0) {
+            cout << "\n (" << itr->first <<"," ;
+            cout << "\t" << itr->second<<"),";
+        }
+           itr++;         
+     }
+     cout<<"\n";
+  }
